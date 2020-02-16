@@ -1,0 +1,167 @@
+<!--
+Brad Wells
+CIS 241.7810
+11/10/18
+Asg12. This program uses drag and drop methods to create a matching game. The game will end when all buttons have been
+dragged to the correct location.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Match Game</title>
+<link href = "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" rel = "stylesheet" >
+<link href="ch12styles.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+<script>
+$(document).ready(function(){
+
+                                                                    //hide the div that contains the playAgain button until game has been won
+$('#win').hide();
+
+var ctr = 0;                                                        //counter for each correct match
+  $('#AlBundy, #PeterGriffin, #FrankandCharlieIASIP').draggable({   //makes each button draggable
+    cancel : false ,                                                //disable the mousedown event
+	//revert : 'invalid',                                           //will make button go back if desired
+	start : function(event, ui){                                    //rotate and enlarge button when dragging
+	  ui.helper.css('transform','rotate(-5deg) scale(1.5)');
+	},
+	stop : function(event, ui){                                     //revert back when done dragging
+	  ui.helper.css('transform', 'rotate(0deg) scale(1)');
+	},
+	zIndex : 100                                                   //keep the buttons on top
+  });
+  
+  
+ // $('#AlBundy').sortable({
+   // connectWith : '#alCouch'
+ // });
+ 
+ 
+  $('#alCouch').droppable({                                       //makes img droppable
+   // connectWith : '#AlBundy'
+    
+	//activeClass : 'highlight',                                  //how to make it stay highlighted ? set bool?
+   accept : '#AlBundy',                                           //accepts correct img
+   drop : function(event, ui){                                    //when correct img dropped, pulsate, add 1 to ctr, call winGame to check if all matches are found
+    // $(this).css( 'transform', 'rotate(360deg) scale(.5)');
+	  // $(this).css('opacity(1)');
+	   $(this).effect("pulsate");
+	   ctr++;                                
+	   winGame();
+   } // end drop
+  }); // end droppable
+  
+  
+  
+  $('#peterCouch').droppable({                                   //makes img droppable
+    accept : '#PeterGriffin',                                    //accepts correct img
+	drop : function(effect,ui){                                  //if correct, pulsate, add 1 to ctr, check for winner
+	  $(this).effect('pulsate');
+	  ctr++;
+	  winGame();
+	}
+  }); //end droppable
+  
+  
+  $('#IASIPCouch').droppable({                                   //makes img droppable
+    accept : '#FrankandCharlieIASIP',                            //accepts correct img
+	drop : function(effect,ui){                                  //if correct,pulsate,add 1 to ctr, check for winner
+	  $(this).effect('pulsate');
+	  ctr++;
+	  winGame();
+	}
+  }); // end droppable
+  
+
+  
+  //****************************************************************************************************************************************************************
+  //this function checks for all matches. if 3 matches are found, explode images, display winner message
+  function winGame(event, ui){
+  if(ctr==3)
+  {
+    //$('#peterCouch').hide('explode'); //how to add placeholder here?//,function(){placeholder: src='winner.jpg'});
+	$('#peterCouch').hide('explode');
+	$('#peterCouch').attr('src','winner.jpg');
+    $('#IASIPCouch').hide('explode');
+	$('#alCouch').hide('explode');
+    $('#AlBundy').hide('explode');
+    $('#PeterGriffin').hide('explode');
+    $('#FrankandCharlieIASIP').hide('explode');
+	
+   // $('#title').text('YOU WATCH TOO MUCH TV. YOU WIN!');
+	//$('#title').fadeIn("slower");
+	
+	//this fades out the title, and fades back in with a winner message
+	$('#title').fadeOut(function() {
+	$(this).text('YOU WATCH TOO MUCH TV. YOU WIN!')
+	}).fadeIn(2000);      
+	
+	//hide instructions and replace with a play again button
+	$('#instructions').hide()                                   
+	$('#peterCouch').show('winner.jpg');
+	
+	
+    //display div with playAgain button
+	$('#win').show();
+  } // end if
+} // end winGame
+
+
+}); // end ready
+
+</script>
+
+</head>
+<body>
+<div class ="wrapper">
+  <header>
+    Match Game
+  </header>
+  <div class ="content">
+    <div class="main">
+	  <h1 id="title">
+	        MATCH THE COUCHES WITH THE OWNERS!
+	  </h1>
+	</div>
+	<div id="photos" align="center">
+	  <img id="alCouch" src="alCouch.jpg" width=300 height=300>
+	  <img id="peterCouch" src="peterCouch.jpg" width=300 height=300>
+	  <img id="IASIPCouch" src="IASIPCouch.jpg" width=300 height=300>
+	</div>
+	<div id="boxes" align="center">
+	  <input type="button" id="PeterGriffin" name="boxes" value="Peter Griffin">
+	  	<!-- <label for="PeterGriffin">Peter Griffin</label> -->
+	  <input type="button" id="AlBundy" name="boxes"  value="Al Bundy">
+	    <!-- <label for="AlBundy">Al Bundy</label> -->
+	  <input type="button" id="FrankandCharlieIASIP" name="boxes" value="Charlie & Frank Reynolds">
+	  	<!-- <label for="FrankandCharlieIASIP">Frank and Charlie</label> -->
+		
+	</div>
+  </div>
+  <div id="instructions">
+    <h2>
+	  Instructions:
+	</h2>
+    <p>Drag the correct owner's name to the picture of his couch. If it is correct, the picture will blink.</p>
+  </div>
+  <div id="win"> 
+    <input type="button" id="reload" name="reloadButton" value="Play Again" onclick="document.location.reload()">
+  </div>
+</div>
+</body>
+
+<!--
+how to make an image stay highlighted? stop:
+how to set placeholder in win function? replace
+how to make everything not shrink? fixed height
+how to make the title fadeIN?
+
+-->
+
+</html>

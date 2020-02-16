@@ -1,0 +1,86 @@
+html{
+	font-family: 'Indie Flower', cursive;
+}
+
+body{
+	background-color: #222930;
+}
+
+.content{
+	border: solid 1px #4EB1BA;
+	background-color:#E9E9E9;
+	margin: 10px 10px 10px 10px;
+	padding-bottom:25px;
+	height: 500px;
+}
+
+
+div h1, header{
+	text-align: center;
+}
+
+header{
+	font-sizze: 30px;
+	color: #4EB1BA;
+	width: 100%
+	padding: 10px 10px 10px 10px;
+}
+
+div h1{
+	color: #4EB1BA;
+	font-size: 40px;
+}
+
+#photos{
+	
+	display:block;
+}
+
+#pic{
+	padding:10px 10px 10px 10px;
+}
+
+#AlBundy, #PeterGriffin, #FrankandCharlieIASIP, #reload{
+	background-color: #4EB1BA;
+	font-family: 'Indie Flower', cursive;
+	font-size: 25px;
+	display: inline-block;
+	
+	
+
+}
+
+#boxes{
+	border-top: 1px solid #222930;
+    margin-top:10px;
+	padding-top:10px;
+	margin-left: 150px;
+	margin-right: 150px
+}
+ #PeterGriffin{ 
+	 margin-left: 50px; 
+	 margin-right: 25px;
+ } 
+
+#peterCouch{
+	margin-left: 50px;
+	margin-right: 50px;
+}
+ #FrankandCharlieIASIP{ 
+	 margin-right:  75px; 
+ } 
+ #AlBundy{ 
+	/* margin-left: 25px; */
+	 margin-right: 220px; 
+	 margin-left: 210px;
+ } 
+/* #alCouch{ */
+	/* opacity:.5; */
+/* } */
+#alCouch.highlight{
+opacity:1;
+}
+
+#instructions{
+	color:#E9E9E9;
+}
